@@ -1,0 +1,179 @@
+{% extends "layout.html" %} {% block body %}
+<!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+<script id="data" type="application/json">{{ table_data | safe }}</script>
+<script src='https://cdn.plot.ly/plotly-2.31.1.min.js'></script>
+<noscript
+  ><iframe
+    src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP"
+    height="0"
+    width="0"
+    style="display: none; visibility: hidden"
+  ></iframe
+></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
+    {%include 'navbar.html'%}
+
+    <!-- Layout container -->
+    <div class="layout-page">
+      <!-- Navbar -->
+  
+        <div class="col-12 mt-4 ms-4">
+          <a href="{% url 'dashboard' %}">
+          <button class="btn btn-label-secondary btn-prev text-dark"> <i class="ti ti-arrow-left me-sm-1 me-0"></i>
+            <span class="align-middle d-sm-inline-block d-none text-dark">Back</span>
+          </button>
+        </a>
+        </div>
+
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+          
+          <!-- Users List Table -->
+          <div class="card">
+            <div class="card-header border-bottom">
+              <div
+                class="d-flex justify-content-between align-items-center row pb-2 gap-3 gap-md-0"
+              >
+                <div class="col-md-6 user_role">
+                  <h5 class="card-title">{{table_name}} TABLE ANALYSIS </h5>
+                </div>
+                
+                <div class="col-md-4 user_status"></div>
+              </div>
+            </div>
+            <div class="card-datatable table-responsive mx-4">
+              <h5>Correlation</h5>
+              <table class="table table-bordered">
+              <!-- {{correlation}} -->
+                <thead class="border-top">
+                  <tr>
+                    <th></th>
+                    {% for column_name in correlation.columns %}
+                    <th>{{ column_name }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row_label, row_data in correlation.iterrows %}
+                  <tr>
+                      <th>{{ row_label }}</th>
+                      {% for value in row_data %}
+                          <td>{{ value }}</td>
+                      {% endfor %}
+                  </tr>
+              {% endfor %}
+                </tbody>
+              </table>
+              
+            </div>
+            <div class="card-body mt-3">
+            <div class="row">
+              <div class="col-6">
+                <label class="form-label" for="column1-scatter">Select Column</label>
+                <select class="form-select column-select" id="column1-scatter" name="column1" required>
+                    <option value="">Select Column</option>
+                    {%for column in column_name%}
+                    <option value={{column}}>{{column}}</option>
+                    {%endfor%}
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="column2-scatter">Select Column</label>
+                <select class="form-select column-select" id="column2-scatter" name="column2" required>
+                    <option value="">Select Column</option>
+                    {%for column in column_name%}
+                    <option value={{column}}>{{column}}</option>
+                    {%endfor%}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 user_plan ms-4 mb-4"
+          style="justify-content: start; display: flex">
+          <button
+                  class="btn btn-secondary add-new btn-primary waves-effect waves-light"
+                    tabindex="0"
+                    aria-controls="DataTables_Table_0"
+                    type="submit"
+                    onclick="displayScatterPlot()"
+                  >
+                    <span
+                      ><span class="d-none d-sm-inline-block"
+                        >Show Scatter Plot</span
+                      ></span
+                    >
+                  </button>
+                </div>
+          <div id="scatterChart"></div>
+            <!-- <h4 class="mx-4 mb-4" > {{table_name}} </h4> -->
+            <!-- <hr> -->
+            <!-- Offcanvas to add new user -->
+            <div
+              class="offcanvas offcanvas-end"
+              tabindex="-1"
+              id="offcanvasAddUser"
+              aria-labelledby="offcanvasAddUserLabel"
+            >
+              
+             
+            </div>
+          </div>
+        </div>
+        <!-- / Content -->
+
+        <div class="content-backdrop fade"></div>
+      </div>
+      <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+
+  <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+  <div class="drag-target"></div>
+</div>
+<!-- / Layout wrapper -->
+<script>
+var data_json = document.getElementById('data').textContent;
+var table_data = JSON.parse(data_json);
+function displayScatterPlot(){
+  
+  var selectedColumn1 = document.getElementById("column1-scatter").value;
+  var selectedColumn2 = document.getElementById("column2-scatter").value;
+  
+  const xArray =  Object.values(table_data[selectedColumn1]);
+  const yArray =  Object.values(table_data[selectedColumn2]);
+  console.log("x",xArray)
+  console.log("y",yArray)
+  // Define Data
+  const data = [{
+    x:xArray,
+    y:yArray,
+    mode:"markers",
+    
+
+  }];
+  // var data=[trace]
+  // Define Layout
+  const layout = {
+    xaxis: {title:selectedColumn1},
+    yaxis: {title:selectedColumn2},  
+    title: "Scatter Plot"
+  };
+  
+  // Display using Plotly
+  Plotly.newPlot("scatterChart", data, layout);
+}
+</script>
+{%endblock%}

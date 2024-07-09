@@ -1,0 +1,180 @@
+{% extends "layout.html" %} {% block body %}
+<!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+<script id="data" type="application/json">{{ col_data | safe }}</script>
+<script src='https://cdn.plot.ly/plotly-2.31.1.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<noscript
+  ><iframe
+    src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP"
+    height="0"
+    width="0"
+    style="display: none; visibility: hidden"
+  ></iframe
+></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
+    {%include 'navbar.html'%}
+
+    <!-- Layout container -->
+    <div class="layout-page">
+      <!-- Navbar -->
+
+
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+        <d class="container-xxl flex-grow-1 container-p-y">
+          
+          
+            
+            <div class="row">
+              <div class="col-xl-6 col-12 mt-4 mb-4 ">
+                <h5 class="card-title mb-3">Histogram </h5>
+         
+              <div class="card "  style="height: 100%;">
+                
+                <div class="card-body h-100">
+
+                  <!-- <img src="data:image/png;base64,{{ column.bar_plot_data }}" class="img-fluid"  alt="Bar Plot"> -->
+                  <div id="histChart"></div>
+                </div>
+              </div>
+            </div> 
+            <div class="col-xl-6 col-12 mt-4 mb-4"><h5 class="card-title mb-3">Box Chart</h5>
+              <!-- <h5 class="card-title mb-2">{{column.col_name}}</h5> -->
+              <div class="card" style="height: 100%;">
+                <div class="card-body h-100">
+                  <div id='boxChart'></div>             
+                </div>
+              </div>
+            </div>
+            </div>
+            
+            <!-- Offcanvas to add new user -->
+            
+          </div>
+        </div>
+        <!-- / Content -->
+
+        <div class="content-backdrop fade"></div>
+      </div>
+      <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+
+  <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+  <div class="drag-target"></div>
+</div>
+<!-- / Layout wrapper -->
+
+
+
+<script>
+    
+    var data_json = document.getElementById('data').textContent;
+    var col_data = JSON.parse(data_json);
+    
+
+    // Parse JSON data into JavaScript object
+    
+    // Define xData (assuming it's predefined)
+    var xData = ['Carmelo<br>Anthony', 'Dwyane<br>Wade', 'Deron<br>Williams', 'Brook<br>Lopez', 'Damian<br>Lillard', 'David<br>West', 'Blake<br>Griffin', 'David<br>Lee', 'Demar<br>Derozan'];
+    
+    // Create a box plot trace
+    var trace = {
+        type: 'box',
+        y: col_data,
+    boxpoints: 'Outliers',
+    jitter: 0.5,
+    whiskerwidth: 0.2,
+    fillcolor: 'cls',
+    marker: { size: 2 },
+    line: { width: 1 }
+};
+
+// Create data array
+var data = [trace];
+
+// Define layout options
+var layout = {
+    title: "{{col_name}}",
+    // yaxis: {
+    //     autorange: true,
+    //     showgrid: true,
+    //     zeroline: true,
+    //     dtick: 5,
+    //     gridcolor: 'rgb(255, 255, 255)',
+    //     gridwidth: 1,
+    //     zerolinecolor: 'rgb(255, 255, 255)',
+    //     zerolinewidth: 2
+    // },
+    margin: { l: 40, r: 30, b: 80, t: 100 },
+    // paper_bgcolor: 'rgb(243, 243, 243)',
+    // plot_bgcolor: 'rgb(243, 243, 243)',
+    showlegend: false
+};
+
+// Plot the graph
+Plotly.newPlot('boxChart', data, layout);
+// var data = {
+//             labels: col_data,
+//             datasets: [{
+//                 label: 'Bar Chart',
+//                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
+//                 borderColor: 'rgba(54, 162, 235, 1)',
+//                 borderWidth: 1,
+//                 data: col_data
+//             }]
+//         };
+
+//         // Configuration options
+//         var options = {
+//             scales: {
+//                 yAxes: [{
+//                     ticks: {
+//                         beginAtZero: true
+//                     }
+//                 }]
+//             }
+//         };
+// var ctx = document.getElementById('barChart').getContext('2d');
+// var myChart = new Chart(ctx, {
+//             type: 'bar',
+//             data: data,
+//             options: options
+//         });
+var trace = {
+        type: 'histogram',
+        x: col_data,
+    marker: {
+    color: 'rgba(100, 162, 235, 0.5)',
+	},
+};
+
+// Create data array
+var data = [trace];
+
+// Define layout options
+var layout = {
+    bargap: 0.05, 
+  bargroupgap: 0.2, 
+  barmode: "overlay", 
+  title: "{{col_name}}", 
+  xaxis: {title: "Value"}, 
+  yaxis: {title: "Count"}
+};
+
+// Plot the graph
+Plotly.newPlot('histChart', data, layout);
+</script>
+{%endblock%}

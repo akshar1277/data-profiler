@@ -1,0 +1,111 @@
+{% extends "layout.html" %} {% block body %}
+<!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+<noscript
+  ><iframe
+    src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP"
+    height="0"
+    width="0"
+    style="display: none; visibility: hidden"
+  ></iframe
+></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
+    {%include 'navbar.html'%}
+
+    <!-- Layout container -->
+    <div class="layout-page">
+      <!-- Navbar -->
+
+
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+          
+          <!-- Users List Table -->
+          <div class="card">
+            <div class="card-header border-bottom">
+              <div
+                class="d-flex justify-content-between align-items-center row pb-2 gap-3 gap-md-0"
+              >
+                <div class="col-md-6 user_role">
+                  <h5 class="card-title">TABLE METRICS</h5>
+                </div>
+                
+                <div class="col-md-4 user_status"></div>
+              </div>
+            </div>
+            <div class="card-datatable table-responsive">
+              
+              <table class="datatables-users table table-hover">
+                <thead class="border-top">
+                  <tr>
+                    <th></th>
+                    <th>column name</th>
+                    <th>column type</th>
+                    <th>null values</th>
+                    <th>unique values</th>
+                    <th>numeric</th>
+                    <th>maximum</th>
+                    <th>minimum</th>
+                    <th>mean</th>
+                    <th>standard deviation</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%for column in columns%}
+                  
+                    <tr>
+                      <td></td>
+                      {%if column.is_numeric%}
+                      <td> <a href="{% url 'column_detail' id=id col_name=column.col_name %}"><button type="button" class="btn p-0 dropdown-toggle hide-arrow" >{{column.col_name}}</button></a></td>
+                      {%else%}
+                      <td>{{column.col_name}}</td>
+                      {%endif%}
+                      <td>{{column.col_type}}</td>
+                      <td>{{column.null_values}}</td>
+                      <td>{{column.unique}}</td>
+                      <td>{{column.is_numeric}}</td>
+                      <td>{%if column.maximum == None%}-{%else%}{{column.maximum}}{%endif%}</td>
+                      <td>{%if column.minimum == None%}-{%else%}{{column.minimum}}{%endif%}</td>
+                      <td>{%if column.mean == None%}-{%else%}{{column.mean}}{%endif%}</td>
+                      <td>{%if column.standard_deviation == None%}-{%else%}{{column.standard_deviation}}{%endif%}</td>
+
+                    </tr>
+                    {%endfor%}
+                </tbody>
+              </table>
+            </div>
+            </div>
+            
+            
+            
+            <!-- Offcanvas to add new user -->
+            
+          </div>
+        </div>
+        <!-- / Content -->
+
+        <div class="content-backdrop fade"></div>
+      </div>
+      <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+
+  <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+  <div class="drag-target"></div>
+</div>
+<!-- / Layout wrapper -->
+
+{%endblock%}

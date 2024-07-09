@@ -1,0 +1,150 @@
+{% extends "layout.html" %} {% block body %}
+{%load static%}
+<!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar  ">
+<div class="layout-container">
+    {%include 'navbar.html'%}
+  <!-- Content wrapper -->
+  <div class="content-wrapper">
+
+    <!-- Content -->
+    
+      <div class="container-xxl flex-grow-1 container-p-y">
+        
+        
+
+<h4 class="py-3 mb-0">
+<span class="text-muted fw-light">Dashboard /</span><span class="fw-medium">Services</span>
+</h4>
+
+<div class="app-ecommerce">
+
+<!-- Add Product -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+
+<div class="d-flex flex-column justify-content-center">
+  <h4 class="mb-1 mt-3">Add a new Service</h4>
+</div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card">
+          <h5 class="card-header">Select Interval</h5>
+          <div class="card-body">
+            <form class="needs-validation" novalidate action="{% url 'pipeline' id=id %}" method="POST">
+                {% csrf_token %}
+              <!-- <div class="mb-3">
+                <label class="form-label" for="bs-validation-name">Service Name</label>
+                <input type="text" class="form-control" id="bs-validation-name" placeholder="John Doe" required name="service" />
+                <div class="valid-feedback"> Looks good! </div>
+                <div class="invalid-feedback"> Please enter your name. </div>
+              </div>
+               -->
+              
+              <div class="mb-3">
+                <label class="form-label" for="bs-validation-country">Schedule Interval</label>
+                <select class="form-select" id="bs-validation-country" name="schedule_interval" required>
+                    <option value="">Select Interval</option>
+                    <option value="hourly">hourly</option>
+                    <option value="daily">daily</option>
+                    <option value="weekly">weekly</option>
+                    <option value="monthly">monthly</option>
+                    <option value="yearly">yearly</option>
+                </select>
+                <div class="valid-feedback"> Looks good! </div>
+                <div class="invalid-feedback"> Please select your country </div>
+              </div>
+              <!-- <div class="mb-3">
+                <label class="form-label" for="bs-validation-dob">DOB</label>
+                <input type="text" class="form-control flatpickr-validation" id="bs-validation-dob" required />
+                <div class="valid-feedback"> Looks good! </div>
+                <div class="invalid-feedback"> Please Enter Your DOB </div>
+              </div> -->
+              <!-- <div class="mb-3">
+                <label class="form-label" for="bs-validation-upload-file">Profile pic</label>
+                <input type="file" class="form-control" id="bs-validation-upload-file" required />
+              </div> -->
+              <!-- <div class="mb-3">
+                <label class="d-block form-label">Gender</label>
+                <div class="form-check mb-2">
+                  <input type="radio" id="bs-validation-radio-male" name="bs-validation-radio" class="form-check-input" required checked />
+                  <label class="form-check-label" for="bs-validation-radio-male">Male</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="bs-validation-radio-female" name="bs-validation-radio" class="form-check-input" required />
+                  <label class="form-check-label" for="bs-validation-radio-female">Female</label>
+                </div>
+              </div> -->
+              <!-- <div class="mb-3">
+                <label class="form-label" for="bs-validation-bio">Bio</label>
+                <textarea class="form-control" id="bs-validation-bio" name="bs-validation-bio" rows="3" required></textarea>
+              </div> -->
+              <!-- <div class="mb-3">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="bs-validation-checkbox" required />
+                  <label class="form-check-label" for="bs-validation-checkbox">Agree to our terms and conditions</label>
+                  <div class="invalid-feedback"> You must agree before submitting. </div>
+                </div>
+              </div> -->
+              <!-- <div class="mb-3">
+                <label class="switch switch-primary">
+                  <input type="checkbox" class="switch-input" required />
+                  <span class="switch-toggle-slider">
+                    <span class="switch-on"></span>
+                    <span class="switch-off"></span>
+                  </span>
+                  <span class="switch-label">Send me related emails</span>
+                </label>
+              </div> -->
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+</div>
+</div>
+      </div>
+      <!-- / Content -->
+
+      
+      
+
+
+
+      
+      <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+  </div>
+  <!-- / Layout page -->
+</div>
+
+
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+
+
+<!-- Drag Target Area To SlideIn Menu On Small Screens -->
+<div class="drag-target"></div>
+
+</div>
+<!-- / Layout wrapper -->
+
+
+<script src="{% static 'js/form-validation.js'%}"></script>
+{%endblock%}
